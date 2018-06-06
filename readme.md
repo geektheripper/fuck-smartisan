@@ -102,6 +102,20 @@ export default {
 }
 ```
 
+### 作为 Koa 中间件使用
+
+本项目提供了 Koa 中间件，该中间件将根据用户user-agent判断是否锤子手机，进而返回提示信息。
+
+使用：
+
+```javascript
+const Koa = require('koa')
+const koaFuckSmartisan = require('fuck-smartisan/dist/koa-fuck-smartisan')
+const app = new Koa()
+
+app.use(koaFuckSmartisan('能力有限，无法对您的手机进行兼容，请使用公司旗下苹果手机以获得最佳体验'))
+```
+
 ## 贡献代码
 
 鉴于本人可能跟不上 TNT 用户的开发效率，所以提交 PR 的同时，请附上自己的屏幕截图，证明自己不是 TNT 用户。
