@@ -7,6 +7,7 @@ read VERSION
 
 echo "Build: "
 yarn build
+chmod +x dist/cli.js
 
 echo "Start unit test: "
 mocha

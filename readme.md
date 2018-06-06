@@ -143,7 +143,32 @@ app.use(async (ctx, next) => {
 
 ```
 
+### 在命令行中使用
 
+本项目提供了命令行工具，以便在 shell 中使用
+
+```bash
+$ is-smartisan --help
+
+usage: is-smartisan [-i|<data>] [--help]
+
+-i      接收标准输入
+--help  显示帮助信息
+
+example:
+$ is-smartisan "Mozilla/5.0 (Linux; U; Android 6.0.1; zh-cn; SM919 Build/MXB48T) Ap..."
+$ cat user-agent.text | is-smartisan -i
+```
+
+示例：
+
+```
+NGX_LOG=/data/logs/nginx-access.log
+
+while read LINE; do
+  is-smartisan "$LINE" && push-black-list "$LINE" || push-white-list "$LINE"
+done < "$NGX_LOG"
+```
 
 ## 贡献代码
 
