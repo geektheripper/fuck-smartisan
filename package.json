@@ -9,6 +9,9 @@
     "release": "bash scripts/release.sh",
     "test": "mocha"
   },
+  "bin": {
+    "is-smartisan": "./dist/cli.js"
+  },
   "keywords": [
     "smartisan",
     "vue"
