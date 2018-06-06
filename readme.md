@@ -104,7 +104,7 @@ export default {
 
 ### 作为 Koa 插件使用
 
-本项目提供了 Koa 插件，该插件将在 ctx 上添加一个 `isSmartisanOS` 属性用于判断访问是否来自锤子手机
+本项目提供了 Koa 插件，该中间件将根据客户端的 user-agent 判断是否锤子手机，进而 ctx 上添加一个 `isSmartisanOS` 属性。
 
 ```javascript
 import Koa from 'koa' // koa 2
@@ -122,7 +122,22 @@ app.use(ctx => {
 
 ```
 
-您也可以向插件传入一个 config 来直接中断 koa 剩余业务逻辑，直接返回结果给锤子客户端
+您也可以向插件传入一个 config 来直接中断 koa 剩余业务逻辑，直接返回一行 “因开开发者能力有限，本页面不对锤子手机进行兼容，理解万岁。” 给锤子客户端：
+
+```javascript
+import Koa from 'koa' // koa 2
+import koaFuckSmartisan from 'fuck-smartisan/dist/koa-fuck-smartisan'
+
+Vue.use(koaFuckSmartisan({ forbid: true }))
+
+app.use(async (ctx, next) => {
+  // This will not run when hammer phone visit
+  ctx.body = "Hello, Phone"
+  await next()
+})
+```
+
+当然，自定义返回信息也是可以的：
 
 ```javascript
 import Koa from 'koa' // koa 2
@@ -134,13 +149,6 @@ const SmartisanResponse = {
 }
 
 Vue.use(koaFuckSmartisan({ forbid: true, response: SmartisanResponse  }))
-
-app.use(async (ctx, next) => {
-  // This will not run when hammer phone visit
-  ctx.body = "Hello, Phone"
-  await next()
-})
-
 ```
 
 ### 在命令行中使用
