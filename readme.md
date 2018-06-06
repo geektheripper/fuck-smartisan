@@ -20,12 +20,12 @@ fuckSmartisan 函数将清理 html 标签下所有内容，并替换为一行 �
 
 你也可以自定义的提示信息，支持以下几种用法（第二、三条将折行显示）
 
-
 ```javascript
 fuckSmartisan('本项目开发者精力有限，暂不准备兼容锤子手机')
 fuckSmartisan('本项目内含播放声音的内容\n为避免影响您使用 TNT\n特此主动屏蔽')
 fuckSmartisan(['锤子万岁', '太君威武'])
 ```
+
 PS: 为了最佳的阅读体验，建议单行不超过 50 字
 
 ## 自定义使用
@@ -93,14 +93,57 @@ export default {
       try {
         const coupons = await queryCoupons({ expried: false })
         return coupons
-      } catch(e) {
+      } catch (e) {
         alert('网络异常')
         return []
       }
-    }
-  }
+    },
+  },
 }
 ```
+
+### 作为 Koa 插件使用
+
+本项目提供了 Koa 插件，该插件将在 ctx 上添加一个 `isSmartisanOS` 属性用于判断访问是否来自锤子手机
+
+```javascript
+import Koa from 'koa' // koa 2
+import koaFuckSmartisan from 'fuck-smartisan/dist/koa-fuck-smartisan'
+
+Vue.use(koaFuckSmartisan())
+
+app.use(ctx => {
+  if (ctx.isSmartisanOS) {
+    ctx.status = 301
+    ctx.body = '锤子手机售价低于2500，我是你孙子'
+    ctx.redirect('http://www.smartisan.love')
+  }
+})
+
+```
+
+您也可以向插件传入一个 config 来直接中断 koa 剩余业务逻辑，直接返回结果给锤子客户端
+
+```javascript
+import Koa from 'koa' // koa 2
+import koaFuckSmartisan from 'fuck-smartisan/dist/koa-fuck-smartisan'
+
+const SmartisanResponse = {
+  status: 404,
+  body: '锤子的销量不到 40 万，显然是一个可忽视的机型',
+}
+
+Vue.use(koaFuckSmartisan({ forbid: true, response: SmartisanResponse  }))
+
+app.use(async (ctx, next) => {
+  // This will not run when hammer phone visit
+  ctx.body = "Hello, Phone"
+  await next()
+})
+
+```
+
+
 
 ## 贡献代码
 
