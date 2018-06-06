@@ -1,3 +1,8 @@
+# 迁移公告：
+
+经网友提醒，本项目违反了 GitHub TOS，故将项目迁移到个人的私有 GitLab 仓库，需要提交 PR 的用户请发 Issue 联系我
+项目迁移后地址：https://git.dev.geektr.cloud/geektr/fuck-smartisan
+
 # Fuck Smartisan
 
 **这是个恶意的项目，作者知道自己是错的，但并不会悔改。所以请勿费力批评。**
